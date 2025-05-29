@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,5 +14,12 @@ public class MainMenu : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked; // Lock the cursor for gameplay.
         Cursor.visible = false;                  // Hide the cursor.
+    }
+
+    public void QuitGame()
+    {
+        Time.timeScale = 1f;
+        Application.Quit();
+        Debug.Log("Quit game!");
     }
 }
