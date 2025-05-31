@@ -25,6 +25,9 @@ public class PlayerController2D : MonoBehaviour
     [Tooltip("Duration (in seconds) that the dash takes.")]
     [SerializeField] private float dashTime = 0.1f;
 
+    [Tooltip("Cooldown time (in seconds) for ground dash.")]
+    [SerializeField] private float groundDashCooldown = 1f;
+
     [Header("=== Ground Check Settings ===")]
     [Tooltip("LayerMask used to detect what counts as ground.")]
     [SerializeField] private LayerMask groundLayer;
@@ -37,7 +40,7 @@ public class PlayerController2D : MonoBehaviour
 
     // Private references and state
     private Rigidbody2D rb;
-    private Vector2 moveInput;          // Raw input for horizontal movement
+    private Vector2 moveInput;
     private bool isGrounded = false;
 
     // Jump-related
@@ -48,11 +51,13 @@ public class PlayerController2D : MonoBehaviour
     private bool isDashing = false;
     public bool IsDashing => isDashing;  // Public getter for external checks
 
-    private bool canDash = true;        // Reset to true on landing
+    // Air dash: one dash allowed until landing
+    private bool canDash = true;
+
+    // Ground dash cooldown control
+    private float nextGroundDashTime = 0f;
+
     private float originalGravityScale;
-
-
-    // Tracks the last nonzero direction the player moved (for default dash direction)
     private Vector2 lastNonzeroMoveDir = Vector2.right;
 
     private void Awake()
@@ -63,33 +68,32 @@ public class PlayerController2D : MonoBehaviour
 
     private void Update()
     {
-        // 1) Check whether we are grounded (via Raycast)
+        // 1) Check whether the player is grounded via Raycast
         isGrounded = CheckGrounded();
 
-        // —— PREVENT ENDLESS JUMP —— 
-        // Only reset isJumping (and jumpTimeCounter) once the player has landed (i.e., grounded AND moving downward or at rest).
+        // When the player is grounded and not moving upward, reset jump and allow air dash
         if (isGrounded && rb.velocity.y <= 0f)
         {
             isJumping = false;
             jumpTimeCounter = 0f;
 
-            // —— RESET DASH ON GROUND —— 
+            // Reset air dash availability
             canDash = true;
         }
 
-        // 2) Read WASD / arrow-key input
+        // 2) Read horizontal (WASD/arrow) input
         float xInput = Input.GetAxisRaw("Horizontal");  // -1, 0, or +1
         float yInput = Input.GetAxisRaw("Vertical");    // -1, 0, or +1
-        moveInput = new Vector2(xInput, 0f);            // Only x for walking
+        moveInput = new Vector2(xInput, 0f);            // Only horizontal for movement
 
-        // 3) Track last nonzero movement direction (for diagonal dashes)
+        // 3) Track last non-zero movement direction for dash direction
         Vector2 fullInput = new Vector2(xInput, yInput);
         if (fullInput.sqrMagnitude > 0.01f)
         {
             lastNonzeroMoveDir = fullInput.normalized;
         }
 
-        // 4) Jump input (W or Up Arrow) — only if grounded and not already jumping or dashing
+        // 4) Jump input (W or Up Arrow) - only if grounded and not already jumping or dashing
         if (!isDashing && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)))
         {
             if (isGrounded && !isJumping)
@@ -100,10 +104,10 @@ public class PlayerController2D : MonoBehaviour
             }
         }
 
-        // Variable jump height — disabled while dashing
+        // Variable jump height control (disabled while dashing)
         if (allowVariableJumpHeight && isJumping && !isDashing)
         {
-            // While the jump button is held and within jumpHoldTime, keep setting upward velocity
+            // While jump key is held and within jumpHoldTime, maintain upward velocity
             if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) &&
                 jumpTimeCounter < jumpHoldTime)
             {
@@ -122,16 +126,27 @@ public class PlayerController2D : MonoBehaviour
             isJumping = false;
         }
 
-        // 5) Dash input (Space) — only if not already dashing and dash is available
-        if (!isDashing && Input.GetKeyDown(KeyCode.Space) && canDash && !isGrounded)
+        // 5) Dash input (Space) - handle air and ground separately
+        if (!isDashing && Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(PerformDash());
+            // Air dash: only if not grounded and air dash is available
+            if (!isGrounded && canDash)
+            {
+                canDash = false;
+                StartCoroutine(PerformDash());
+            }
+            // Ground dash: check cooldown
+            else if (isGrounded && Time.time >= nextGroundDashTime)
+            {
+                nextGroundDashTime = Time.time + groundDashCooldown;
+                StartCoroutine(PerformDash());
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        // While dashing, skip normal movement (gravity is disabled inside PerformDash)
+        // Skip normal movement while dashing (gravity is disabled during dash)
         if (isDashing) return;
 
         // 6) Regular horizontal movement
@@ -141,23 +156,21 @@ public class PlayerController2D : MonoBehaviour
     }
 
     /// <summary>
-    /// Coroutine that handles a directional dash (usable in air or ground).
+    /// Coroutine that handles a directional dash.
     /// Uses MovePosition to guarantee a fixed dashDistance in the chosen direction.
     /// </summary>
     private IEnumerator PerformDash()
     {
-        // CANCEL any ongoing variable jump so no extra force applies after dash
+        // Cancel any ongoing variable jump
         isJumping = false;
-        jumpTimeCounter = jumpHoldTime; // expire any remaining jump-hold
+        jumpTimeCounter = jumpHoldTime; // Expire any remaining jump hold
 
         isDashing = true;
-        canDash = false;
 
-        // Determine dash direction (normalized)
+        // Determine dash direction (normalized) based on input or last move direction
         Vector2 inputDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         Vector2 dashDir = (inputDir.sqrMagnitude > 0.01f) ? inputDir.normalized : lastNonzeroMoveDir;
 
-        // Calculate start and end positions
         Vector2 startPos = rb.position;
         Vector2 endPos = startPos + dashDir * dashDistance;
 
@@ -183,13 +196,10 @@ public class PlayerController2D : MonoBehaviour
         // Restore gravity and exit dash state
         rb.gravityScale = originalGravityScale;
         isDashing = false;
-
-        // canDash will be reset on the next landing
     }
 
     /// <summary>
-    /// Returns true if a short downward Raycast from groundCheckPoint hits groundLayer,
-    /// ignoring any trigger colliders.
+    /// Returns true if a short downward Raycast from groundCheckPoint hits groundLayer, ignoring any trigger colliders.
     /// </summary>
     private bool CheckGrounded()
     {
