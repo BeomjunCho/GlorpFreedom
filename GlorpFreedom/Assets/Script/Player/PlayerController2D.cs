@@ -46,6 +46,8 @@ public class PlayerController2D : MonoBehaviour
 
     // Dash-related
     private bool isDashing = false;
+    public bool IsDashing => isDashing;  // Public getter for external checks
+
     private bool canDash = true;        // Reset to true on landing
     private float originalGravityScale;
 
@@ -119,8 +121,8 @@ public class PlayerController2D : MonoBehaviour
             isJumping = false;
         }
 
-        // 5) Dash input (Left Shift) — only if not already dashing and dash is available
-        if (!isDashing && Input.GetKeyDown(KeyCode.Space) && canDash)
+        // 5) Dash input (Space) — only if not already dashing and dash is available
+        if (!isDashing && Input.GetKeyDown(KeyCode.Space) && canDash && !isGrounded)
         {
             StartCoroutine(PerformDash());
         }
