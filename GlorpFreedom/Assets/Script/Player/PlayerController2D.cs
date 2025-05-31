@@ -51,6 +51,7 @@ public class PlayerController2D : MonoBehaviour
     private bool canDash = true;        // Reset to true on landing
     private float originalGravityScale;
 
+
     // Tracks the last nonzero direction the player moved (for default dash direction)
     private Vector2 lastNonzeroMoveDir = Vector2.right;
 
@@ -187,28 +188,40 @@ public class PlayerController2D : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns true if a short downward Raycast from groundCheckPoint hits groundLayer.
+    /// Returns true if a short downward Raycast from groundCheckPoint hits groundLayer,
+    /// ignoring any trigger colliders.
     /// </summary>
     private bool CheckGrounded()
     {
         if (groundCheckPoint == null) return false;
 
-        RaycastHit2D hit = Physics2D.Raycast(
+        // Create a ContactFilter2D that only hits the groundLayer and ignores triggers
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.SetLayerMask(groundLayer);
+        filter.useTriggers = false; // Ignore trigger colliders
+
+        // Prepare a single-element array to receive the hit result
+        RaycastHit2D[] hits = new RaycastHit2D[1];
+
+        // Perform the raycast with the contact filter
+        int hitCount = Physics2D.Raycast(
             groundCheckPoint.position,
             Vector2.down,
-            groundCheckDistance,
-            groundLayer
+            filter,
+            hits,
+            groundCheckDistance
         );
 
 #if UNITY_EDITOR
+        // Draw a debug ray: green if ground, red otherwise
         Debug.DrawRay(
             groundCheckPoint.position,
             Vector2.down * groundCheckDistance,
-            hit.collider != null ? Color.green : Color.red
+            hitCount > 0 ? Color.green : Color.red
         );
 #endif
 
-        return hit.collider != null;
+        return hitCount > 0;
     }
 
 #if UNITY_EDITOR

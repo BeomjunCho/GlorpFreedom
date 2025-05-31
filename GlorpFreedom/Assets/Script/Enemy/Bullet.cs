@@ -43,10 +43,12 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+            PlayerController2D playerController2D = other.GetComponent<PlayerController2D>();
+            if (playerHealth != null && playerController2D != null && !playerController2D.IsDashing)
             {
                 playerHealth.TakeDamage(1);
             }
+            
         }
 
         // Destroy the bullet in all other cases (including walls, enemies, etc.)
