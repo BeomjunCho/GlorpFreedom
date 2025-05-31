@@ -1,8 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Example GameManager that provides the PlayerController2D reference to the EnemyManager
-/// when the game starts.
+/// GameManager initializes EnemyManager and CheckPointManager at game start.
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -12,9 +11,12 @@ public class GameManager : MonoBehaviour
     [Tooltip("Reference to the EnemyManager in the scene.")]
     [SerializeField] private EnemyManager enemyManager;
 
+    [Tooltip("Reference to the CheckPointManager in the scene.")]
+    [SerializeField] private CheckPointManager checkpointManager;
+
     private void Start()
     {
-        // Ensure references are assigned
+        // Validate references
         if (playerController == null)
         {
             Debug.LogError("GameManager: PlayerController2D reference is not assigned.");
@@ -27,9 +29,18 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // Inject the playerController into all enemies
+        if (checkpointManager == null)
+        {
+            Debug.LogError("GameManager: CheckPointManager reference is not assigned.");
+            return;
+        }
+
+        // Initialize EnemyManager with the player's controller
         enemyManager.Initialize(playerController);
 
-        // Additional initialization logic can follow here if needed
+        // Initialize CheckPointManager with the player GameObject
+        checkpointManager.Initialize(playerController.gameObject);
+
+        Debug.Log("[GameManager] Initialization complete: EnemyManager and CheckPointManager are set up.");
     }
 }

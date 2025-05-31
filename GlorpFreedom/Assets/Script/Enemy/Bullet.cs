@@ -2,7 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// Bullet behavior: moves in a specified direction at a constant speed,
-/// and destroys itself after a set lifetime or on collision.
+/// and destroys itself after a set lifetime or on collision (except checkpoint triggers).
 /// </summary>
 public class Bullet : MonoBehaviour
 {
@@ -33,15 +33,23 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // If the collided object has a CheckpointTrigger component, do nothing
+        if (other.GetComponent<CheckpointTriggerVolume>() != null)
+        {
+            return;
+        }
+
+        // If collided with the player, deal 1 damage (if PlayerHealth exists)
         if (other.CompareTag("Player"))
         {
-            // Deal 1 damage to the player if they have a PlayerHealth component
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(1);
             }
         }
+
+        // Destroy the bullet in all other cases (including walls, enemies, etc.)
         Destroy(gameObject);
     }
 }
