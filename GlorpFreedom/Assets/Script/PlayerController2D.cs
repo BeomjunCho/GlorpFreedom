@@ -10,7 +10,7 @@ public class PlayerController2D : MonoBehaviour
 
     [Header("=== Jump Settings ===")]
     [Tooltip("Upward impulse applied when jumping.")]
-    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float jumpForce = 4f;
 
     [Tooltip("Allow holding jump for variable jump height.")]
     [SerializeField] private bool allowVariableJumpHeight = true;
@@ -20,10 +20,10 @@ public class PlayerController2D : MonoBehaviour
 
     [Header("=== Dash Settings ===")]
     [Tooltip("Distance to travel during the dash.")]
-    [SerializeField] private float dashDistance = 2f;
+    [SerializeField] private float dashDistance = 3f;
 
     [Tooltip("Duration (in seconds) that the dash takes.")]
-    [SerializeField] private float dashTime = 0.2f;
+    [SerializeField] private float dashTime = 0.1f;
 
     [Header("=== Ground Check Settings ===")]
     [Tooltip("LayerMask used to detect what counts as ground.")]
