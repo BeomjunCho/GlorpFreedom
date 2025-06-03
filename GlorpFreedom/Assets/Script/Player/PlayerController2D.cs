@@ -62,6 +62,7 @@ public class PlayerController2D : MonoBehaviour
 
     private void Awake()
     {
+        animator.SetBool("isJumping", false);
         rb = GetComponent<Rigidbody2D>();
         originalGravityScale = rb.gravityScale;
     }
@@ -74,6 +75,7 @@ public class PlayerController2D : MonoBehaviour
         // When the player is grounded and not moving upward, reset jump and allow air dash
         if (isGrounded && rb.velocity.y <= 0f)
         {
+            animator.SetBool("isJumping", false);
             isJumping = false;
             jumpTimeCounter = 0f;
 
@@ -111,6 +113,7 @@ public class PlayerController2D : MonoBehaviour
             if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) &&
                 jumpTimeCounter < jumpHoldTime)
             {
+                animator.SetBool("isJumping", true);
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 jumpTimeCounter += Time.deltaTime;
             }
