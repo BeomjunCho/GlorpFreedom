@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5404039867309151491}
   - component: {fileID: 112565262991599229}
   - component: {fileID: 1182548434456294474}
+  - component: {fileID: 3015770018265330126}
   m_Layer: 0
   m_Name: Player_Demo
   m_TagString: Player
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.023292, y: -0.65222025, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7926810071105868332}
@@ -80,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.3428092, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -124,8 +125,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.01}
-  m_Radius: 0.5
+  m_Offset: {x: 0, y: 0.01}
+  m_Radius: 0.28
 --- !u!50 &112565262991599229
 Rigidbody2D:
   serializedVersion: 4
@@ -166,16 +167,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
+  animator: {fileID: 3015770018265330126}
   jumpForce: 4
   allowVariableJumpHeight: 1
   jumpHoldTime: 0.3
   dashDistance: 3
   dashTime: 0.1
+  groundDashCooldown: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
   groundCheckDistance: 0.1
   groundCheckPoint: {fileID: 7926810071105868332}
+--- !u!95 &3015770018265330126
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6150380363269253923}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2ed1bdd42e7a78044953264237c5aa91, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6614392158772188629
 GameObject:
   m_ObjectHideFlags: 0

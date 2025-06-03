@@ -7,7 +7,7 @@ public class PlayerController2D : MonoBehaviour
     [Header("=== Movement Settings ===")]
     [Tooltip("Horizontal move speed (units/sec).")]
     [SerializeField] private float moveSpeed = 3f;
-
+    public Animator animator;
     [Header("=== Jump Settings ===")]
     [Tooltip("Upward impulse applied when jumping.")]
     [SerializeField] private float jumpForce = 4f;
@@ -70,7 +70,7 @@ public class PlayerController2D : MonoBehaviour
     {
         // 1) Check whether the player is grounded via Raycast
         isGrounded = CheckGrounded();
-
+        //animator.SetFloat("Speed", Mathf.Abs(moveSpeed)); // For animation
         // When the player is grounded and not moving upward, reset jump and allow air dash
         if (isGrounded && rb.velocity.y <= 0f)
         {
@@ -142,6 +142,11 @@ public class PlayerController2D : MonoBehaviour
                 StartCoroutine(PerformDash());
             }
         }
+
+        if (moveInput.x != 0)
+        {
+            transform.localScale = new Vector3(Mathf.Sign(moveInput.x) * 3f, 3, 1);
+        }
     }
 
     private void FixedUpdate()
@@ -153,6 +158,7 @@ public class PlayerController2D : MonoBehaviour
         Vector2 currentVelocity = rb.velocity;
         currentVelocity.x = moveInput.x * moveSpeed;
         rb.velocity = new Vector2(currentVelocity.x, rb.velocity.y);
+        animator.SetFloat("Speed", Mathf.Abs(moveInput.x)); // For animation
     }
 
     /// <summary>
