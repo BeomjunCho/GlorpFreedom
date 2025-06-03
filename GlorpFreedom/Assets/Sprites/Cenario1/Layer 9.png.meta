@@ -122,12 +122,12 @@ TextureImporter:
       name: Layer 9_0
       rect:
         serializedVersion: 2
-        x: 628
-        y: 168
-        width: 172
-        height: 87
+        x: 629
+        y: 183
+        width: 171
+        height: 72
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -148,7 +148,7 @@ TextureImporter:
         width: 94
         height: 75
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -169,7 +169,7 @@ TextureImporter:
         width: 19
         height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -184,14 +184,17 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: dbb854d9ff9027a4c9bdca286561b960
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Layer 9_0: -3394920065024653024
+      Layer 9_1: 517217598426354409
+      Layer 9_2: -5352182012106895131
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

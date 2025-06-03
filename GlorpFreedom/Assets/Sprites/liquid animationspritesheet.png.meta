@@ -623,7 +623,28 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      liquid animationspritesheet_0: 4275138041545096097
+      liquid animationspritesheet_1: 9132158513000862098
+      liquid animationspritesheet_10: -2015339967349224123
+      liquid animationspritesheet_11: -8943970346409059089
+      liquid animationspritesheet_12: 359907948210241492
+      liquid animationspritesheet_13: -7900578315187701609
+      liquid animationspritesheet_14: -6793732765287254472
+      liquid animationspritesheet_15: -3052789060931295329
+      liquid animationspritesheet_16: 2413188106304079015
+      liquid animationspritesheet_17: -3304910152613157681
+      liquid animationspritesheet_18: -3563268450970192754
+      liquid animationspritesheet_19: 6216714123935389360
+      liquid animationspritesheet_2: 2383195156108120546
+      liquid animationspritesheet_20: -1750281492136302701
+      liquid animationspritesheet_3: 3723977963244944676
+      liquid animationspritesheet_4: -257675859107451860
+      liquid animationspritesheet_5: -4721976348199000800
+      liquid animationspritesheet_6: -4153423268314070389
+      liquid animationspritesheet_7: -3906671459832099204
+      liquid animationspritesheet_8: 1264952743936963450
+      liquid animationspritesheet_9: 4292116742985638016
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
