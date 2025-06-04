@@ -1,68 +1,78 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject _pauseMenuScreen;
+    [Header("Pause Menu UI")]
+    [Tooltip("Assign the panel (or root GameObject) for the pause menu here.")]
+    [SerializeField] private GameObject pausePanel;
 
-    private bool _isPaused = false;
+    private bool isPaused = false;
 
-    private void Start()
+    private void Awake()
     {
-        _pauseMenuScreen.SetActive(false);
-        Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        // Ensure pause menu is hidden at start
+        if (pausePanel != null)
+        {
+            pausePanel.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("PauseMenu: pausePanel is not assigned in the Inspector.");
+        }
     }
 
     private void Update()
     {
+        // Toggle pause when Tab key is pressed
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            TogglePause();
+            if (isPaused)
+                ResumeGame();
+            else
+                PauseGame();
         }
     }
 
-    private void TogglePause()
+    /// <summary>
+    /// Activates pause menu, stops game time, and unlocks cursor.
+    /// </summary>
+    public void PauseGame()
     {
-        _isPaused = !_isPaused;
-        _pauseMenuScreen.SetActive(_isPaused);
+        if (pausePanel != null)
+            pausePanel.SetActive(true);
 
-        if (_isPaused)
-        {
-            Time.timeScale = 0f;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else
-        {
-            Time.timeScale = 1f;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+        Time.timeScale = 0f;                   // Freeze game logic and animations
+        isPaused = true;
+
+        Cursor.lockState = CursorLockMode.None; // Unlock cursor so player can click UI
+        Cursor.visible = true;                  // Make cursor visible
     }
 
+    /// <summary>
+    /// Hides pause menu, resumes game time, and locks cursor.
+    /// </summary>
     public void ResumeGame()
     {
-        _isPaused = false;
-        _pauseMenuScreen.SetActive(false);
-        Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
+
+        Time.timeScale = 1f;                   // Resume normal time scale
+        isPaused = false;
+
+        Cursor.lockState = CursorLockMode.Locked; // Lock cursor back to center (if your game uses locked cursor)
+        Cursor.visible = false;                   // Hide cursor during gameplay
     }
 
-    public void LoadMainMenu()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu"); 
-    }
-
+    /// <summary>
+    /// Quits the application. In the Editor, stops Play mode.
+    /// </summary>
     public void QuitGame()
     {
-        Time.timeScale = 1f;
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
-        Debug.Log("Quit game!");
+#endif
     }
 }
