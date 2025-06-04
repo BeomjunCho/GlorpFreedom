@@ -4,57 +4,81 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController2D : MonoBehaviour
 {
-    [Header("=== Movement Settings ===")]
-    [Tooltip("Horizontal move speed (units/sec).")]
+    [Header("Movement Settings")]
+    [Tooltip("Horizontal move speed in units per second.")]
     [SerializeField] private float moveSpeed = 3f;
+
     public Animator animator;
-    [Header("=== Jump Settings ===")]
+
+    [Header("Jump Settings")]
     [Tooltip("Upward impulse applied when jumping.")]
     [SerializeField] private float jumpForce = 4f;
 
-    [Tooltip("Allow holding jump for variable jump height.")]
+    [Tooltip("Allow holding jump key for variable jump height.")]
     [SerializeField] private bool allowVariableJumpHeight = true;
 
-    [Tooltip("How long (in seconds) the jump button can be held for extra height.")]
+    [Tooltip("Maximum time in seconds for which jump key can be held.")]
     [SerializeField] private float jumpHoldTime = 0.3f;
 
-    [Header("=== Dash Settings ===")]
-    [Tooltip("Distance to travel during the dash.")]
+    [Header("Dash Settings")]
+    [Tooltip("Distance in units to travel during the dash.")]
     [SerializeField] private float dashDistance = 3f;
 
-    [Tooltip("Duration (in seconds) that the dash takes.")]
+    [Tooltip("Duration in seconds that the dash lasts.")]
     [SerializeField] private float dashTime = 0.1f;
 
-    [Tooltip("Cooldown time (in seconds) for ground dash.")]
+    [Tooltip("Cooldown time in seconds before ground dash can be used again.")]
     [SerializeField] private float groundDashCooldown = 1f;
 
-    [Header("=== Ground Check Settings ===")]
-    [Tooltip("LayerMask used to detect what counts as ground.")]
+    [Header("Ground Check Settings")]
+    [Tooltip("LayerMask used to detect ground surfaces.")]
     [SerializeField] private LayerMask groundLayer;
 
-    [Tooltip("Distance for the downward Raycast ground check.")]
+    [Tooltip("Distance in units for the downward raycast to check ground.")]
     [SerializeField] private float groundCheckDistance = 0.1f;
 
-    [Tooltip("Transform placed at the player's feet for ground-check.")]
+    [Tooltip("Transform placed at the player’s feet for ground-check.")]
     [SerializeField] private Transform groundCheckPoint;
 
-    // Private references and state
-    private Rigidbody2D rb;
-    private Vector2 moveInput;
-    private bool isGrounded = false;
+    [Header("Audio Settings")]
+    [Tooltip("AudioSource component to use for walk looping.")]
+    [SerializeField] private AudioSource walkSource;
 
-    // Jump-related
+    [Tooltip("AudioSource component to use for one-shot sound effects.")]
+    [SerializeField] private AudioSource sfxSource;
+
+    [Tooltip("Audio clip to play while walking.")]
+    [SerializeField] private AudioClip walkClip;
+
+    [Tooltip("Audio clip to play when jumping.")]
+    [SerializeField] private AudioClip jumpClip;
+
+    [Tooltip("Audio clip to play when landing.")]
+    [SerializeField] private AudioClip landClip;
+
+    [Tooltip("Audio clip to play when dashing.")]
+    [SerializeField] private AudioClip dashClip;
+
+    // Reference to Rigidbody2D component
+    private Rigidbody2D rb;
+    // Input vector for movement
+    private Vector2 moveInput;
+    // Flag indicating if the player is on the ground
+    private bool isGrounded = false;
+    // Flag used to detect landing events
+    private bool wasGrounded = false;
+
+    // Jump state variables
     private bool isJumping = false;
     private float jumpTimeCounter = 0f;
 
-    // Dash-related
+    // Dash state variables
     private bool isDashing = false;
-    public bool IsDashing => isDashing;  // Public getter for external checks
+    public bool IsDashing => isDashing;  // Public getter
 
-    // Air dash: one dash allowed until landing
+    // Allows one air dash per jump
     private bool canDash = true;
-
-    // Ground dash cooldown control
+    // Timestamp for next allowable ground dash
     private float nextGroundDashTime = 0f;
 
     private float originalGravityScale;
@@ -62,40 +86,84 @@ public class PlayerController2D : MonoBehaviour
 
     private void Awake()
     {
-        animator.SetBool("isJumping", false);
+        // Cache Rigidbody2D reference
         rb = GetComponent<Rigidbody2D>();
         originalGravityScale = rb.gravityScale;
+
+        // Configure walk audio source
+        if (walkSource != null)
+        {
+            walkSource.clip = walkClip;
+            walkSource.loop = true;
+            walkSource.volume = 1f;
+        }
+
+        // Configure SFX audio source
+        if (sfxSource != null)
+        {
+            sfxSource.loop = false;
+            sfxSource.volume = 1f;
+        }
+
+        // Initialize animator state
+        animator.SetBool("isJumping", false);
     }
 
     private void Update()
     {
-        // 1) Check whether the player is grounded via Raycast
+        // Check if player is grounded using raycast
         isGrounded = CheckGrounded();
-        //animator.SetFloat("Speed", Mathf.Abs(moveSpeed)); // For animation
-        // When the player is grounded and not moving upward, reset jump and allow air dash
+
+        // If player just landed, play landing sound
+        if (!wasGrounded && isGrounded)
+        {
+            if (landClip != null && sfxSource != null)
+            {
+                sfxSource.PlayOneShot(landClip);
+            }
+        }
+
+        // When grounded and not moving upward, reset jump and allow air dash
         if (isGrounded && rb.velocity.y <= 0f)
         {
             animator.SetBool("isJumping", false);
             isJumping = false;
             jumpTimeCounter = 0f;
-
-            // Reset air dash availability
             canDash = true;
         }
 
-        // 2) Read horizontal (WASD/arrow) input
-        float xInput = Input.GetAxisRaw("Horizontal");  // -1, 0, or +1
-        float yInput = Input.GetAxisRaw("Vertical");    // -1, 0, or +1
-        moveInput = new Vector2(xInput, 0f);            // Only horizontal for movement
+        // Read horizontal input (A/D or left/right arrow)
+        float xInput = Input.GetAxisRaw("Horizontal");
+        // Read vertical input (W/S or up/down arrow)
+        float yInput = Input.GetAxisRaw("Vertical");
+        moveInput = new Vector2(xInput, 0f);
 
-        // 3) Track last non-zero movement direction for dash direction
+        // Track last nonzero input direction for dash direction
         Vector2 fullInput = new Vector2(xInput, yInput);
         if (fullInput.sqrMagnitude > 0.01f)
         {
             lastNonzeroMoveDir = fullInput.normalized;
         }
 
-        // 4) Jump input (W or Up Arrow) - only if grounded and not already jumping or dashing
+        // Handle walk loop: play when moving on ground, stop otherwise
+        if (isGrounded && Mathf.Abs(xInput) > 0.01f)
+        {
+            if (walkSource != null && !walkSource.isPlaying)
+            {
+                walkSource.volume = 0.5f;
+                walkSource.Play();
+            }
+        }
+        else
+        {
+            if (walkSource != null && walkSource.isPlaying)
+            {
+                walkSource.volume = 1f;
+                walkSource.Stop();
+            }
+        }
+
+        // Jump input (W or up arrow), only if grounded and not already jumping or dashing
         if (!isDashing && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)))
         {
             if (isGrounded && !isJumping)
@@ -103,17 +171,22 @@ public class PlayerController2D : MonoBehaviour
                 isJumping = true;
                 jumpTimeCounter = 0f;
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+
+                // Play jump sound
+                if (jumpClip != null && sfxSource != null)
+                {
+                    sfxSource.PlayOneShot(jumpClip);
+                }
+                animator.SetBool("isJumping", true);
             }
         }
 
-        // Variable jump height control (disabled while dashing)
+        // Variable jump height control, disabled while dashing
         if (allowVariableJumpHeight && isJumping && !isDashing)
         {
-            // While jump key is held and within jumpHoldTime, maintain upward velocity
             if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) &&
                 jumpTimeCounter < jumpHoldTime)
             {
-                animator.SetBool("isJumping", true);
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 jumpTimeCounter += Time.deltaTime;
             }
@@ -129,10 +202,10 @@ public class PlayerController2D : MonoBehaviour
             isJumping = false;
         }
 
-        // 5) Dash input (Space) - handle air and ground separately
+        // Dash input (Space), handle air dash and ground dash separately
         if (!isDashing && Input.GetKeyDown(KeyCode.Space))
         {
-            // Air dash: only if not grounded and air dash is available
+            // Air dash: only if not grounded and air dash available
             if (!isGrounded && canDash)
             {
                 canDash = false;
@@ -146,44 +219,51 @@ public class PlayerController2D : MonoBehaviour
             }
         }
 
+        // Flip sprite based on horizontal input direction
         if (moveInput.x != 0)
         {
-            transform.localScale = new Vector3(Mathf.Sign(moveInput.x) * 3f, 3, 1);
+            transform.localScale = new Vector3(Mathf.Sign(moveInput.x) * 3f, 3f, 1f);
         }
+
+        // Store previous grounded state for next frame
+        wasGrounded = isGrounded;
     }
 
     private void FixedUpdate()
     {
-        // Skip normal movement while dashing (gravity is disabled during dash)
+        // Skip normal movement while dashing (gravity disabled during dash)
         if (isDashing) return;
 
-        // 6) Regular horizontal movement
+        // Regular horizontal movement
         Vector2 currentVelocity = rb.velocity;
         currentVelocity.x = moveInput.x * moveSpeed;
         rb.velocity = new Vector2(currentVelocity.x, rb.velocity.y);
-        animator.SetFloat("Speed", Mathf.Abs(moveInput.x)); // For animation
+        animator.SetFloat("Speed", Mathf.Abs(moveInput.x));
     }
 
-    /// <summary>
-    /// Coroutine that handles a directional dash.
-    /// Uses MovePosition to guarantee a fixed dashDistance in the chosen direction.
-    /// </summary>
+    // Coroutine to handle a directional dash movement
     private IEnumerator PerformDash()
     {
         // Cancel any ongoing variable jump
         isJumping = false;
-        jumpTimeCounter = jumpHoldTime; // Expire any remaining jump hold
+        jumpTimeCounter = jumpHoldTime;
 
         isDashing = true;
 
-        // Determine dash direction (normalized) based on input or last move direction
+        // Play dash sound effect
+        if (dashClip != null && sfxSource != null)
+        {
+            sfxSource.PlayOneShot(dashClip);
+        }
+
+        // Determine dash direction based on input or last known direction
         Vector2 inputDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         Vector2 dashDir = (inputDir.sqrMagnitude > 0.01f) ? inputDir.normalized : lastNonzeroMoveDir;
 
         Vector2 startPos = rb.position;
         Vector2 endPos = startPos + dashDir * dashDistance;
 
-        // Disable gravity so the player won't be pulled down during dash
+        // Disable gravity during dash
         rb.gravityScale = 0f;
 
         float elapsed = 0f;
@@ -191,15 +271,12 @@ public class PlayerController2D : MonoBehaviour
         {
             elapsed += Time.fixedDeltaTime;
             float t = Mathf.Clamp01(elapsed / dashTime);
-
-            // Interpolate position and move the Rigidbody
             Vector2 newPos = Vector2.Lerp(startPos, endPos, t);
             rb.MovePosition(newPos);
-
             yield return new WaitForFixedUpdate();
         }
 
-        // Ensure final position is exactly the target
+        // Ensure final position is exactly endPos
         rb.MovePosition(endPos);
 
         // Restore gravity and exit dash state
@@ -207,22 +284,16 @@ public class PlayerController2D : MonoBehaviour
         isDashing = false;
     }
 
-    /// <summary>
-    /// Returns true if a short downward Raycast from groundCheckPoint hits groundLayer, ignoring any trigger colliders.
-    /// </summary>
+    // Returns true if a downward raycast from groundCheckPoint hits groundLayer
     private bool CheckGrounded()
     {
         if (groundCheckPoint == null) return false;
 
-        // Create a ContactFilter2D that only hits the groundLayer and ignores triggers
         ContactFilter2D filter = new ContactFilter2D();
         filter.SetLayerMask(groundLayer);
-        filter.useTriggers = false; // Ignore trigger colliders
+        filter.useTriggers = false;
 
-        // Prepare a single-element array to receive the hit result
         RaycastHit2D[] hits = new RaycastHit2D[1];
-
-        // Perform the raycast with the contact filter
         int hitCount = Physics2D.Raycast(
             groundCheckPoint.position,
             Vector2.down,
@@ -232,7 +303,6 @@ public class PlayerController2D : MonoBehaviour
         );
 
 #if UNITY_EDITOR
-        // Draw a debug ray: green if ground, red otherwise
         Debug.DrawRay(
             groundCheckPoint.position,
             Vector2.down * groundCheckDistance,
@@ -244,6 +314,7 @@ public class PlayerController2D : MonoBehaviour
     }
 
 #if UNITY_EDITOR
+    // Draws a small sphere at the ground check point for visualization
     private void OnDrawGizmosSelected()
     {
         if (groundCheckPoint != null)

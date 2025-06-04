@@ -32,6 +32,8 @@ public class Turret : EnemyBase
     [Tooltip("Maximum distance at which the turret can shoot the player.")]
     [SerializeField] private float shootingRange = 5f;
 
+    [SerializeField] private AudioSource _shootingAudioSource;
+
     // Internal timers and state
     private float phaseTimer = 0f;
     private float nextFireTime = 0f;
@@ -104,6 +106,7 @@ public class Turret : EnemyBase
     /// </summary>
     protected virtual void FireBullet()
     {
+        _shootingAudioSource.Play();
         if (bulletPrefab == null || firePoint == null) return;
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         // Optional: Play muzzle flash or sound effect here.

@@ -141,6 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d09a8fcb3cbbb04aba89caf41bec0fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 0}
+  deadClip: {fileID: 0}
 --- !u!114 &88931637 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1182548434456294474, guid: 2fdc4f628b900f549b4237d5de3d6cbc, type: 3}
@@ -678,14 +680,6 @@ PrefabInstance:
     - target: {fileID: 4057134009728204138, guid: 6f7c15aa5ea2d2a4ab92ac3c8c0ddeec, type: 3}
       propertyPath: m_Name
       value: Turret_Demo
-      objectReference: {fileID: 0}
-    - target: {fileID: 6803718862915993216, guid: 6f7c15aa5ea2d2a4ab92ac3c8c0ddeec, type: 3}
-      propertyPath: pauseDuration
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6803718862915993216, guid: 6f7c15aa5ea2d2a4ab92ac3c8c0ddeec, type: 3}
-      propertyPath: shootingRange
-      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7956400992170210543, guid: 6f7c15aa5ea2d2a4ab92ac3c8c0ddeec, type: 3}
       propertyPath: m_LocalPosition.x

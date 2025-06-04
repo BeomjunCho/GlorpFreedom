@@ -13,6 +13,8 @@ public class Teleport : MonoBehaviour
     [Tooltip("Duration in seconds over which the player’s position will interpolate (smoothly move) to the target.")]
     public float teleportDuration = 0f;
 
+    [SerializeField] private AudioSource _teleportAudioSource;
+
     // Prevent multiple overlapping teleports if the player stays inside the trigger
     private bool isTeleporting = false;
 
@@ -46,6 +48,8 @@ public class Teleport : MonoBehaviour
     private IEnumerator TeleportCoroutine(Transform playerTransform, Rigidbody2D playerRb, Collider2D playerCollider)
     {
         isTeleporting = true;
+
+        _teleportAudioSource.Play();
 
         // 1) Wait for the initial delay before teleporting.
         yield return new WaitForSeconds(delayTime);

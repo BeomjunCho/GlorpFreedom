@@ -1,25 +1,28 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     [Header("UI Panels")]
-    [SerializeField] private GameObject _howToPlay;
+    [SerializeField] private GameObject _howToPlay;    
 
     [Header("Audio Sources")]
-    [SerializeField] private AudioSource ambientSource;
-    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource ambientSource; 
+    [SerializeField] private AudioSource sfxSource;     
 
     [Header("Audio Clips")]
-    [SerializeField] private AudioClip hoverClip;
-    [SerializeField] private AudioClip clickClip;
-    [SerializeField] private AudioClip startGameClip;
+    [SerializeField] private AudioClip hoverClip;       
+    [SerializeField] private AudioClip clickClip;       
+    [SerializeField] private AudioClip startGameClip;   
 
     [Header("Fade Settings")]
-    [SerializeField] private float fadeDuration = 1f;
+    [SerializeField] private float fadeDuration = 1f;   
+    [SerializeField] private Image fadeImage;
+    [SerializeField] private GameObject fadeImageObj;
 
-    private float _initialAmbientVolume;
+    private float _initialAmbientVolume;                 
 
     private void Start()
     {
@@ -28,6 +31,13 @@ public class MainMenu : MonoBehaviour
             ambientSource.loop = true;
             ambientSource.Play();
             _initialAmbientVolume = ambientSource.volume;
+        }
+
+        if (fadeImage != null)
+        {
+            Color c = fadeImage.color;
+            c.a = 0f;
+            fadeImage.color = c;
         }
     }
 
@@ -44,6 +54,12 @@ public class MainMenu : MonoBehaviour
         if (ambientSource != null)
         {
             StartCoroutine(FadeOutAmbient());
+        }
+
+        if (fadeImage != null)
+        {
+            fadeImageObj.SetActive(true);
+            StartCoroutine(FadeToBlack());
         }
 
         StartCoroutine(DelayedLoadInGame(startGameClip.length));
@@ -93,6 +109,26 @@ public class MainMenu : MonoBehaviour
 
         ambientSource.volume = 0f;
         ambientSource.Stop();
+    }
+
+    private IEnumerator FadeToBlack()
+    {
+        float elapsed = 0f;
+        Color startColor = fadeImage.color;
+        Color targetColor = startColor;
+        targetColor.a = 1f;
+
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / fadeDuration;
+            fadeImage.color = Color.Lerp(startColor, targetColor, t);
+            yield return null;
+        }
+
+        Color final = fadeImage.color;
+        final.a = 1f;
+        fadeImage.color = final;
     }
 
     private IEnumerator DelayedLoadInGame(float delay)

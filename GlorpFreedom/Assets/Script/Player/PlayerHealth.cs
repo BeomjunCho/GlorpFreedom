@@ -14,6 +14,12 @@ public class PlayerHealth : MonoBehaviour
     private SpriteRenderer sr;
     private PlayerController2D pc;
 
+    [Header("=== Audio Settings ===")]
+    [Tooltip("AudioSource to use for death sound.")]
+    [SerializeField] private AudioSource sfxSource;
+    [Tooltip("Clip to play when player dies.")]
+    [SerializeField] private AudioClip deadClip;
+
     // Store original gravity scale so we can restore it on respawn
     private float originalGravityScale;
 
@@ -32,10 +38,16 @@ public class PlayerHealth : MonoBehaviour
         {
             originalGravityScale = rb2d.gravityScale;
         }
+
+        // Ensure sfxSource is not looping and volume is set
+        if (sfxSource != null)
+        {
+            sfxSource.loop = false;
+            sfxSource.volume = 1f;
+        }
     }
-    /// <summary>
-    /// Debug
-    /// </summary>
+
+    // Debug: press P to take damage, L to reset
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.P)) TakeDamage(1);
@@ -59,15 +71,21 @@ public class PlayerHealth : MonoBehaviour
         if (isDead) return;
         isDead = true;
 
-        // 1) Disable player controller
+        // 1) Play death sound
+        if (deadClip != null && sfxSource != null)
+        {
+            sfxSource.PlayOneShot(deadClip);
+        }
+
+        // 2) Disable player controller
         if (pc != null)
             pc.enabled = false;
 
-        // 2) Disable sprite renderer (hide the sprite)
+        // 3) Disable sprite renderer (hide the sprite)
         if (sr != null)
             sr.enabled = false;
 
-        // 3) Remove only gravity by setting gravityScale to zero
+        // 4) Remove only gravity by setting gravityScale to zero
         if (rb2d != null)
         {
             rb2d.gravityScale = 0f;
@@ -75,7 +93,7 @@ public class PlayerHealth : MonoBehaviour
             rb2d.velocity = Vector2.zero;
         }
 
-        // 4) Invoke death event for other managers
+        // 5) Invoke death event for other managers
         OnPlayerDied?.Invoke();
     }
 
