@@ -1,0 +1,652 @@
+fileFormatVersion: 2
+guid: 3328174685fec6f4897e7fc166863a0f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4275138041545096097
+    second: liquid animationspritesheet_0
+  - first:
+      213: 9132158513000862098
+    second: liquid animationspritesheet_1
+  - first:
+      213: 2383195156108120546
+    second: liquid animationspritesheet_2
+  - first:
+      213: 3723977963244944676
+    second: liquid animationspritesheet_3
+  - first:
+      213: -257675859107451860
+    second: liquid animationspritesheet_4
+  - first:
+      213: -4721976348199000800
+    second: liquid animationspritesheet_5
+  - first:
+      213: -4153423268314070389
+    second: liquid animationspritesheet_6
+  - first:
+      213: -3906671459832099204
+    second: liquid animationspritesheet_7
+  - first:
+      213: 1264952743936963450
+    second: liquid animationspritesheet_8
+  - first:
+      213: 4292116742985638016
+    second: liquid animationspritesheet_9
+  - first:
+      213: -2015339967349224123
+    second: liquid animationspritesheet_10
+  - first:
+      213: -8943970346409059089
+    second: liquid animationspritesheet_11
+  - first:
+      213: 359907948210241492
+    second: liquid animationspritesheet_12
+  - first:
+      213: -7900578315187701609
+    second: liquid animationspritesheet_13
+  - first:
+      213: -6793732765287254472
+    second: liquid animationspritesheet_14
+  - first:
+      213: -3052789060931295329
+    second: liquid animationspritesheet_15
+  - first:
+      213: 2413188106304079015
+    second: liquid animationspritesheet_16
+  - first:
+      213: -3304910152613157681
+    second: liquid animationspritesheet_17
+  - first:
+      213: -3563268450970192754
+    second: liquid animationspritesheet_18
+  - first:
+      213: 6216714123935389360
+    second: liquid animationspritesheet_19
+  - first:
+      213: -1750281492136302701
+    second: liquid animationspritesheet_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: liquid animationspritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 2338
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1abfd0ce567545b30800000000000000
+      internalID: 4275138041545096097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 2338
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 291d9f788c1fbbe70800000000000000
+      internalID: 9132158513000862098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 1404
+        y: 2338
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e191462e5fc21120800000000000000
+      internalID: 2383195156108120546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 2087
+        y: 2338
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42df8922a3a3ea330800000000000000
+      internalID: 3723977963244944676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 2770
+        y: 2338
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2ce4bedb2d8c6cf0800000000000000
+      internalID: -257675859107451860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 1785
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0256dc7878b287eb0800000000000000
+      internalID: -4721976348199000800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 1785
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b824c421b831c56c0800000000000000
+      internalID: -4153423268314070389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 1404
+        y: 1785
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7e0d867107b8c9c0800000000000000
+      internalID: -3906671459832099204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 2087
+        y: 1785
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a73b40091d30e8110800000000000000
+      internalID: 1264952743936963450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 2770
+        y: 1785
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0806a28ef69a09b30800000000000000
+      internalID: 4292116742985638016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 1232
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54d80883af21804e0800000000000000
+      internalID: -2015339967349224123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 1232
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fec19ac6b52a0e380800000000000000
+      internalID: -8943970346409059089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 1404
+        y: 1232
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4df39ec3f56aef400800000000000000
+      internalID: 359907948210241492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 2087
+        y: 1232
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7983513a1e18b5290800000000000000
+      internalID: -7900578315187701609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 2770
+        y: 1232
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 836fe127b00d7b1a0800000000000000
+      internalID: -6793732765287254472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 679
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f97edf0068052a5d0800000000000000
+      internalID: -3052789060931295329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_16
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 679
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a4c37c0ccd5d7120800000000000000
+      internalID: 2413188106304079015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_17
+      rect:
+        serializedVersion: 2
+        x: 1404
+        y: 679
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc429e2f9b99222d0800000000000000
+      internalID: -3304910152613157681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_18
+      rect:
+        serializedVersion: 2
+        x: 2087
+        y: 679
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e84b09c093abc8ec0800000000000000
+      internalID: -3563268450970192754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_19
+      rect:
+        serializedVersion: 2
+        x: 2770
+        y: 679
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b69253ee84364650800000000000000
+      internalID: 6216714123935389360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: liquid animationspritesheet_20
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 126
+        width: 627
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 397664c9140c5b7e0800000000000000
+      internalID: -1750281492136302701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      liquid animationspritesheet_0: 4275138041545096097
+      liquid animationspritesheet_1: 9132158513000862098
+      liquid animationspritesheet_10: -2015339967349224123
+      liquid animationspritesheet_11: -8943970346409059089
+      liquid animationspritesheet_12: 359907948210241492
+      liquid animationspritesheet_13: -7900578315187701609
+      liquid animationspritesheet_14: -6793732765287254472
+      liquid animationspritesheet_15: -3052789060931295329
+      liquid animationspritesheet_16: 2413188106304079015
+      liquid animationspritesheet_17: -3304910152613157681
+      liquid animationspritesheet_18: -3563268450970192754
+      liquid animationspritesheet_19: 6216714123935389360
+      liquid animationspritesheet_2: 2383195156108120546
+      liquid animationspritesheet_20: -1750281492136302701
+      liquid animationspritesheet_3: 3723977963244944676
+      liquid animationspritesheet_4: -257675859107451860
+      liquid animationspritesheet_5: -4721976348199000800
+      liquid animationspritesheet_6: -4153423268314070389
+      liquid animationspritesheet_7: -3906671459832099204
+      liquid animationspritesheet_8: 1264952743936963450
+      liquid animationspritesheet_9: 4292116742985638016
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
